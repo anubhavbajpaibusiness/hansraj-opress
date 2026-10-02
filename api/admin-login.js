@@ -4,7 +4,6 @@ import crypto from 'crypto';
 
 const MAX_ATTEMPTS = 8;
 const LOCK_SECONDS = 60 * 15; // 15 min
-const SESSION_SECONDS = 60 * 60 * 12; // 12 h
 
 function safeEqual(a, b) {
   const ba = Buffer.from(String(a));
@@ -15,21 +14,21 @@ function safeEqual(a, b) {
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
-    res.setHeader('Allow', 'POST');
-    return res.status(405).json({ error: 'method_not_allowed' });
+    res.setHeader('Allow', ['POST']);
+    return res.status(405).end('Method not allowed');
   }
 
   try {
     const real = process.env.ADMIN_PASSWORD;
     if (!real) {
-      return res.status(500).json({ error: 'server_error', message: 'ADMIN_PASSWORD not set' });
+      return res.status(500).json({ error: 'ADMIN_PASSWORD not set on server' });
     }
 
     let body = req.body;
     if (typeof body === 'string') {
       try { body = JSON.parse(body); } catch { body = {}; }
     }
-    const password = (body && typeof body === 'object' && body.password) || '';
+    const password = (body && body.password) || '';
 
     const ip = String(req.headers['x-forwarded-for'] || '')
       .split(',')[0].trim() || 'unknown';
@@ -41,7 +40,7 @@ export default async function handler(req, res) {
     if (fails >= MAX_ATTEMPTS) {
       return res.status(429).json({
         error: 'too_many_attempts',
-        retryInSeconds: LOCK_SECONDS,
+        retryInSeconds: LOCK_SECONDS
       });
     }
 
@@ -53,10 +52,11 @@ export default async function handler(req, res) {
     try { await redis.del(failKey); } catch {}
 
     const token = crypto.randomBytes(24).toString('hex');
-    await redis.set(K.session(token), true, { ex: SESSION_SECONDS });
+    await redis.set(K.session(token), true, { ex: 60 * 60 * 12 });
 
     return res.status(200).json({ token });
   } catch (err) {
     return res.status(500).json({ error: 'server_error', message: err.message });
   }
 }
+

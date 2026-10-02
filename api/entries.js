@@ -4,17 +4,16 @@ import { K } from '../lib/keys.js';
 
 export const config = {
   api: {
-    bodyParser: { sizeLimit: '4mb' },
-  },
+    bodyParser: { sizeLimit: '4mb' }
+  }
 };
 
 const CATEGORIES = [
   'Academics', 'Hostel/Mess', 'Infrastructure', 'Faculty', 'Canteen',
-  'Washrooms', 'Sports', 'Library', 'Girls Safety', 'Other',
+  'Washrooms', 'Sports', 'Library', 'Girls Safety', 'Other'
 ];
 const URGENCIES = ['routine', 'attention', 'urgent'];
-const ID_PREFIX = 'GAR';
-const ID_RE = new RegExp('^' + ID_PREFIX + '-[A-Z0-9]{6}$');
+const ID_RE = /^HRC-[A-Z0-9]{6}$/;
 const MAX_IMAGE_CHARS = 1_500_000;
 
 function shape(entry, { meta, admin }) {
@@ -97,7 +96,7 @@ export default async function handler(req, res) {
         contact,
         status: 'received',
         reply: null,
-        ts: Date.now(),
+        ts: Date.now()
       };
 
       await redis.set(K.entry(id), record);
@@ -110,14 +109,15 @@ export default async function handler(req, res) {
       return res.status(200).json({ ok: true, id });
     }
 
-    res.setHeader('Allow', 'GET, POST');
-    return res.status(405).json({ error: 'method_not_allowed' });
+    res.setHeader('Allow', ['GET', 'POST']);
+    return res.status(405).end('Method not allowed');
   } catch (err) {
     return res.status(500).json({
       error: 'server_error',
       message: err && err.message ? err.message : String(err),
       hasUrl: !!process.env.UPSTASH_REDIS_REST_URL,
-      hasToken: !!process.env.UPSTASH_REDIS_REST_TOKEN,
+      hasToken: !!process.env.UPSTASH_REDIS_REST_TOKEN
     });
   }
 }
+

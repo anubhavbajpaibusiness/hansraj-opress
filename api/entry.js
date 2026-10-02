@@ -4,12 +4,12 @@ import { K } from '../lib/keys.js';
 
 export const config = {
   api: {
-    bodyParser: { sizeLimit: '1mb' },
-  },
+    bodyParser: { sizeLimit: '1mb' }
+  }
 };
 
 const STATUSES = ['received', 'review', 'resolved'];
-const ID_RE = /^GAR-[A-Z0-9]{6}$/;
+const ID_RE = /^HRC-[A-Z0-9]{6}$/;
 
 export default async function handler(req, res) {
   const id = String(req.query.id || '').toUpperCase().trim();
@@ -75,9 +75,10 @@ export default async function handler(req, res) {
       return res.status(200).json({ ok: true });
     }
 
-    res.setHeader('Allow', 'GET, PATCH, DELETE');
-    return res.status(405).json({ error: 'method_not_allowed' });
+    res.setHeader('Allow', ['GET', 'PATCH', 'DELETE']);
+    return res.status(405).end('Method not allowed');
   } catch (err) {
     return res.status(500).json({ error: 'server_error', message: err.message });
   }
 }
+

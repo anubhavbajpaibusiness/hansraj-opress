@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gargi College Voicebox — Students' Union</title>
+<title>Hansraj College Voicebox — Students' Union</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -354,7 +354,7 @@
 
   <div class="hero">
     <div class="credit-block">
-      <div class="cl1">Gargi College</div>
+      <div class="cl1">Hansraj College</div>
       <div class="cl2">Students' Union</div>
       <div class="cl3">Elected office bearers &middot; 2026&ndash;27</div>
     </div>
@@ -406,28 +406,20 @@ const URGENCY = [
   {v:"attention", l:"Needs attention"},
   {v:"urgent", l:"Urgent"}
 ];
-const ID_PREFIX = "GAR";
 
 const TEAM = [
-  { name: "Abhisvara Sharma",        role: "President",                       party: null, photo: null },
-  { name: "Deshna Jain",             role: "Vice-President",                  party: null, photo: null },
-  { name: "Gauri Verma",             role: "Cultural Secretary",              party: null, photo: null },
-  { name: "Gargi Pal",               role: "General Secretary",               party: null, photo: null },
-  { name: "Khushi Dalal",            role: "Treasurer",                       party: null, photo: null },
-  { name: "Anushtha Mishra",         role: "Proctor (Arts)",                  party: null, photo: null },
-  { name: "Kavya Singh Lodhi",       role: "Proctor (Commerce)",              party: null, photo: null },
-  { name: "Aditi Chauhan",           role: "Proctor (Science)",               party: null, photo: null },
-  { name: "Sapna",                   role: "Sports President",                party: null, photo: null },
-  { name: "Nitya",                   role: "Sports Captain (Arts)",           party: null, photo: null },
-  { name: "Sanya Kumari",            role: "Sports Coordinator (Commerce)",   party: null, photo: null },
-  { name: "Priyanshi",               role: "Sports Coordinator (Science)",    party: null, photo: null },
-  { name: "Akarshi Singh",           role: "ICC Representative (3rd Year)",   party: null, photo: null }
+  { name: "Vaibhav Sharma",   role: "President",              party: "ABVP", photo: null },
+  { name: "Uday Raghuvanshi", role: "Vice-President",         party: "ABVP", photo: null },
+  { name: "Sushil Saini",     role: "Secretary",              party: "ABVP", photo: null },
+  { name: "Aditya",           role: "Joint-Secretary",        party: "ABVP", photo: null },
+  { name: "Chetan",           role: "College Representative", party: "ABVP", photo: null },
+  { name: "Harsh Chaudhary",  role: "College Representative", party: "ABVP", photo: null }
 ];
 
 const HELPLINES = [
   { label: "Emergency (police / fire / ambulance)", number: "112" },
   { label: "Women's Helpline", number: "181" },
-  { label: "Gargi College Campus Security", number: "" }
+  { label: "Hansraj College Campus Security", number: "" }
 ];
 
 let selectedCat = null;
@@ -450,7 +442,7 @@ function genId(){
   const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
   let s = "";
   for(let i=0;i<6;i++) s += chars[Math.floor(Math.random()*chars.length)];
-  return ID_PREFIX + "-" + s;
+  return "HRC-" + s;
 }
 
 function initials(name){
@@ -993,7 +985,7 @@ function renderTrack(){
   c.innerHTML = `
     <div class="field">
       <label>Your tracking code</label>
-      <input type="text" id="trackInput" placeholder="e.g. GAR-7F3K2Q" style="text-transform:uppercase;">
+      <input type="text" id="trackInput" placeholder="e.g. HRC-7F3K2Q" style="text-transform:uppercase;">
       <div class="error-text" id="trackErr" style="display:none;"></div>
     </div>
     <button class="submit" id="trackBtn">Check status</button>
@@ -1075,7 +1067,7 @@ function renderAdminLock(){
     <div class="admin-lock">
       <div class="k">&#128274;</div>
       <h3>Union desk only</h3>
-      <p>This board is for the Gargi College Students' Union team to review submissions.</p>
+      <p>This board is for the Hansraj College Students' Union team to review submissions.</p>
       <input type="password" id="adminPass" placeholder="Enter access code">
       <button class="submit" id="unlockBtn">Unlock</button>
       <div class="error-text" id="lockErr" style="display:none;margin-top:10px;"></div>
@@ -1259,3 +1251,5 @@ renderSubmit();
 </script>
 </body>
 </html>
+
+
