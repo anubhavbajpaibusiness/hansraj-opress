@@ -348,6 +348,54 @@
     *{scroll-behavior:auto !important;}
   }
 </style>
+<meta name="theme-color" content="#7A2048">
+<meta name="description" content="Anonymous complaint and suggestion box for the Hansraj College students.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237A2048'/%3E%3Cpath d='M14 20h36v22H34l-10 9v-9H14z' fill='%23E8A33D'/%3E%3C/svg%3E">
+<style id="ui-v2">
+  /* ===== UI v2 ===== */
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;}
+  body{padding-bottom:env(safe-area-inset-bottom,0);}
+  .hero{background:linear-gradient(155deg,var(--maroon) 0%,var(--maroon-dark) 140%);padding-top:calc(2.4rem + env(safe-area-inset-top,0px));}
+  .hero h1{letter-spacing:-.01em;}
+  .panel{box-shadow:0 22px 40px -22px rgba(76,18,48,.45),0 2px 6px rgba(76,18,48,.06);}
+  .tabs{background:#fff;padding:6px 6px 0;gap:2px;}
+  .tab{min-height:46px;border-radius:12px 12px 0 0;transition:color .15s,background .15s;-webkit-tap-highlight-color:transparent;}
+  .tab:hover{background:var(--cream);}
+  .tab:focus-visible,.chip:focus-visible,.fchip:focus-visible,button:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid var(--mustard);outline-offset:2px;}
+  .tab.active{background:linear-gradient(to bottom,#fff,var(--cream));}
+  .content > *{animation:uiRise .35s cubic-bezier(.22,1,.36,1) both;}
+  @keyframes uiRise{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+  .chip,.fchip{min-height:38px;display:inline-flex;align-items:center;transition:all .15s ease;-webkit-tap-highlight-color:transparent;}
+  .chip:hover:not(.sel){border-color:var(--maroon);color:var(--maroon);}
+  .chip.sel{box-shadow:0 6px 14px -8px rgba(76,18,48,.6);transform:translateY(-1px);}
+  textarea,input[type=text],input[type=password]{transition:border-color .15s,box-shadow .15s,background .15s;}
+  textarea:focus,input[type=text]:focus,input[type=password]:focus{box-shadow:0 0 0 4px rgba(122,32,72,.12);}
+  button.submit{background:linear-gradient(180deg,#8B2755,var(--maroon));box-shadow:0 10px 20px -12px rgba(76,18,48,.8);transition:transform .12s,box-shadow .15s,background .15s;}
+  button.submit:hover:not(:disabled){box-shadow:0 14px 24px -12px rgba(76,18,48,.9);transform:translateY(-1px);}
+  .upload-box{transition:border-color .15s,background .15s;}
+  .upload-box:hover{background:#fff;}
+  .ghost-btn{transition:background .15s,border-color .15s;}
+  .ghost-btn:hover{background:var(--cream);border-color:var(--maroon);}
+  .pulse{border:0.5px solid var(--line);}
+  .union-card{transition:transform .2s ease,box-shadow .2s ease;box-shadow:0 1px 0 rgba(76,18,48,.04);}
+  .union-card:hover{transform:translateY(-3px);box-shadow:0 14px 24px -16px rgba(76,18,48,.45);}
+  .entry{border:0.5px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px;background:#fff;}
+  .entry:last-child{border-bottom:0.5px solid var(--line);}
+  .track-result{box-shadow:0 10px 22px -18px rgba(76,18,48,.5);}
+  .success .badge{box-shadow:0 0 0 8px rgba(60,110,74,.12);animation:uiPop .45s cubic-bezier(.34,1.56,.64,1) both;}
+  @keyframes uiPop{from{transform:scale(.5);opacity:0;}to{transform:none;opacity:1;}}
+  .copy-btn{display:block;margin:-.6rem auto 1.3rem;background:none;border:none;color:var(--maroon);font:600 12.5px 'Space Grotesk',sans-serif;cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:6px 10px;}
+  .safety-btn{transition:transform .12s,box-shadow .15s;}
+  .safety-btn:hover{box-shadow:0 10px 20px -14px rgba(178,58,58,.7);}
+  .safety-btn:active{transform:scale(.99);}
+  @media (min-width:700px){
+    body{background:radial-gradient(circle at 20% 0%,#F6E3D0 0,transparent 45%),radial-gradient(circle at 100% 100%,#EFD6DF 0,transparent 40%),var(--cream);}
+    .wrap{margin:28px auto;border-radius:28px;overflow:hidden;box-shadow:0 40px 80px -40px rgba(76,18,48,.5);background:var(--cream);padding-bottom:2rem;max-width:560px;}
+  }
+  @media (max-width:380px){.tab{font-size:11.5px;}.hero h1{font-size:2.15rem;}.content{padding:1.3rem 1rem 1.6rem;}}
+  @media (prefers-reduced-motion:reduce){.content > *,.success .badge{animation:none !important;}.union-card,.chip,button.submit{transition:none !important;}}
+
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -1042,6 +1090,12 @@ function renderUnion(){
       These are your elected Students' Union office bearers for 2026&ndash;27. Every submission sent through
       this box is read by this desk — they decide what gets taken up with the college.
     </p>
+        ${TEAM.length === 0 ? `
+      <div class="admin-lock" style="margin-top:8px;">
+        <div class="k">&#127963;</div>
+        <h3>Office bearers coming soon</h3>
+        <p>The 2026&ndash;27 team will be listed here once confirmed. You can still submit and track feedback &mdash; it reaches the desk.</p>
+      </div>` : ''}
     <div class="union-grid">
       ${TEAM.map((m, i) => `
         <div class="union-card${i === 0 ? ' lead' : ''}">
@@ -1248,6 +1302,33 @@ document.querySelectorAll('.tab').forEach(t=>{
 
 loadBanners();
 renderSubmit();
+</script>
+<script id="ui-v2-js">
+(function(){
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var host = document.getElementById('content') || document.body;
+  new MutationObserver(function(){
+    document.querySelectorAll('.track-id:not([data-copy])').forEach(function(el){
+      el.setAttribute('data-copy','1');
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'copy-btn'; b.textContent = 'Copy code';
+      b.onclick = function(){
+        var t = el.textContent.trim();
+        var done = function(m){ b.textContent = m; setTimeout(function(){ b.textContent = 'Copy code'; }, 1800); };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(t).then(function(){ done('Copied \u2713'); }, function(){ done('Press and hold to copy'); });
+        } else { done('Press and hold to copy'); }
+      };
+      el.insertAdjacentElement('afterend', b);
+    });
+  }).observe(host, {childList:true, subtree:true});
+  document.addEventListener('click', function(e){
+    var t = e.target.closest && e.target.closest('.tab');
+    var p = document.querySelector('.panel');
+    if (t && p && p.getBoundingClientRect().top < 0) p.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block: 'start'});
+  });
+})();
+
 </script>
 </body>
 </html>

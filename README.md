@@ -1,16 +1,22 @@
 # Hansraj College Voicebox
 
-Anonymous complaint & suggestion box for the Hansraj College Students'
-Union. Static frontend in `public/`, three serverless API routes in `api/`,
-shared auth helper in `lib/`, and data stored in Upstash Redis.
+Anonymous complaint & suggestion box for Hansraj College.
+Static frontend in `public/`, serverless API in `api/`, helpers in `lib/`,
+data in Upstash Redis (one database shared by all college sites).
 
-## Deploy in 5 minutes
+| Setting | Value |
+|---|---|
+| Tracking-code prefix | `HRC-XXXXXX` |
+| Redis namespace | `du:hrc:voicebox` |
+| Repo / Vercel project | `hansraj-opress` |
 
-### 1. Push to GitHub
-```bash
-git init
-git add .
-git commit -m "Hansraj Voicebox"
-git branch -M main
-git remote add origin https://github.com/anubhavbajpaibusiness/hansraj-opress.git
-git push -u origin main
+## Deploy
+1. Push this folder to GitHub (`https://github.com/anubhavbajpaibusiness/hansraj-opress.git`) and import it in Vercel.
+2. Environment variables:
+   - `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` — identical on every college project
+   - `ADMIN_PASSWORD` — unique per college (use a long one)
+   - `REDIS_NAMESPACE` — optional override, defaults to `du:hrc:voicebox`. Never reuse another college's value.
+
+## Office bearers
+Edit the `TEAM` array in `public/index.html`. Put photos in `public/images/team/`
+and set `photo: "/images/team/president.jpg"`. An empty `TEAM` shows a "coming soon" card.

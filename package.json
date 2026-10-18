@@ -1,11 +1,10 @@
 {
-  "name": "hrc-voicebox",
-  "version": "1.0.0",
+  "name": "hansraj-opress",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
+  "engines": { "node": ">=18" },
   "dependencies": {
     "@upstash/redis": "^1.34.0"
   }
 }
-
-

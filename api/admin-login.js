@@ -13,6 +13,7 @@ function safeEqual(a, b) {
 }
 
 export default async function handler(req, res) {
+  res.setHeader('Cache-Control', 'no-store');
   if (req.method !== 'POST') {
     res.setHeader('Allow', ['POST']);
     return res.status(405).end('Method not allowed');
